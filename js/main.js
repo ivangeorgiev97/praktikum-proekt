@@ -1,3 +1,5 @@
 $(document).ready(function() {
-    // TODO - Add logic
+    $("#left").fadeIn(800);
+    $("#right").fadeIn(1200);
+    $("#footer-text").fadeIn(2000);
 })
