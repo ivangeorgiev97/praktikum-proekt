@@ -29,33 +29,43 @@
                         <textarea class="form-control" id="description" rows="6"></textarea>
                     </div>
                     <button type="button" class="btn btn-primary">Добави</button>
-                    <p class="my-5">.. или не от листа ..</p>
-                    <button type="button" class="btn btn-warning">Случайна</button>
+                    <p class="my-3">.. или не от листа ..</p>
+                    <button type="button" class="btn btn-success">Случайна</button>
                 </form>
             </div>
             <div class="col-xs-12 col-md-8" style="display: none;" id="right">
                 <h3>Вашият лист:</h3>
-                <div class="card mb-3" style="max-width: 780px;">
+
+                <button class="btn btn-warning my-2" id="circle-pictures">Кръгли снимки</button>
+
+                <div id="cards-list">
+
+                </div>
+
+                <div id="clone-this-card" class="card my-3" style="max-width: 780px; display:none;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <!-- <img src=".." class="card-img" alt=".."> -->
+                            <img src="https://via.placeholder.com/600/24f355" class="card-img" alt="placeholder image">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Title here</h5>
                                 <p class="card-text">Text here.</p>
-                                <button class="btn btn-danger">Премахни</button>
+                                <button type="button" class="btn btn-danger remove-card">Премахни</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="row mt-5">
-            <span id="footer-text" style="display: none;" class="text-center font-weight-bold">
+        <footer class="row mt-5 text-center font-weight-bold">
+            <p id="footer-text" style="display: none;">
                 Иван Георгиев - 2001737001, спецаилност "Софтуерни технологии със специализация мобилни системи и
                 приложения"
-            </span>
+            </p>
+            <p id="api-information" style="display: none;">
+                API- <a href="https://jsonplaceholder.typicode.com/" target="_blank">https://jsonplaceholder.typicode.com/</a>
+            </p>
         </footer>
     </div>
 
