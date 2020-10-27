@@ -17,12 +17,8 @@
             <div class="col-xs-12 col-md-4" style="display: none;" id="left">
                 <form>
                     <div class="form-group">
-                        <label for="select-field">Изберете снимка:</label>
-                        <select class="custom-select" id="select-field">
-                            <option selected>Изберете някоя снимка</option>
-                            <option value="1">One</option>
-                            <option value="3">Three</option>
-                        </select>
+                        <label for="select-field">Заглавие:</label>
+                        <input type="text" class="form-control" id="title" placeholder="Заглавие" />
                     </div>
                     <div class="form-group">
                         <label for="description">Описание:</label>
@@ -34,9 +30,9 @@
                 </form>
             </div>
             <div class="col-xs-12 col-md-8" style="display: none;" id="right">
-                <h3>Вашият лист:</h3>
+                <h3>Вашите любими спомени:</h3>
 
-                <button class="btn btn-warning my-2" id="circle-pictures">Кръгли снимки</button>
+                <button class="btn btn-warning my-2" id="circle-cards">Кръгли елементи</button>
 
                 <div id="cards-list">
 
@@ -62,9 +58,6 @@
             <p id="footer-text" style="display: none;">
                 Иван Георгиев - 2001737001, спецаилност "Софтуерни технологии със специализация мобилни системи и
                 приложения"
-            </p>
-            <p id="api-information" style="display: none;">
-                API- <a href="https://jsonplaceholder.typicode.com/" target="_blank">https://jsonplaceholder.typicode.com/</a>
             </p>
         </footer>
     </div>
