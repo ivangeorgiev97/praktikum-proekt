@@ -14,16 +14,20 @@ class MemoriesTableSeeder extends Seeder
     {
         $memories = [
             [
-                'title'       => 'Title 1',
-                'description' => 'Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1'
+                'title'       => 'First title',
+                'description' => 'Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1'
             ],
             [
-                'title'       => 'Title 2',
+                'title'       => 'Second title',
                 'description' => 'Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2 Description 2'
             ],
             [
-                'title'       => 'Title 2',
+                'title'       => 'Again another title',
                 'description' => 'Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3 Description 3'            
+            ],
+            [
+                'title'       => 'Fourth title',
+                'description' => 'Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4 Description 4'            
             ]
         ];
 

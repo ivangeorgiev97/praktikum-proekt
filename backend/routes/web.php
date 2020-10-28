@@ -16,8 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('memories/getAll', ['uses' => 'MemoryController@getAll']);
-    $router->get('memories/getAllSortedByDate', ['uses' => 'MemoryController@getAllSortedByDate']);
+    $router->get('memories/getAll/{fromId}/{sortCriteria}', ['uses' => 'MemoryController@getAll']);
     $router->get('memories/getById/{id}', ['uses' => 'MemoryController@getById']);
     $router->post('memories/create', ['uses' => 'MemoryController@create']);
     $router->put('memories/update/{id}', ['uses' => 'MemoryController@update']);

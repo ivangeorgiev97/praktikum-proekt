@@ -1,32 +1,60 @@
 $(document).ready(function () {
-    let circleMode = false;
-    let clonedCard = $("#clone-this-card").clone();
+    /*  
+    * API URL
+    */
+    const apiUrl = 'http://localhost:8000/api/memories';
+    let darkMode = false;
 
     $.ajax({
         method: "GET",
-        url: ``,
+        url: `${apiUrl}/getAll/1/id`,
         dataType: "json"
     }).done(function (data) {
-        $("#left").fadeIn(800);
-        $("#right").fadeIn(1200);
-        $("#footer-text").fadeIn(2000);
+        initDisplay()
+        
+        for (let i = 0; i < data.length; i++) {
+            const card = createCard(data[i]);
+            $("#cards-list").append(card);
+            card.show();
+        }
 
-        clonedCard.removeAttr('id');
-        clonedCard.find('h5').text(data.title);
-        clonedCard.find('p').text("Тази снимка беше случайно избрана от API-то. При рефреш на страницата винаги ще се избира 1 случайна и ще бъде добавена в карта.");
-
-        $("#cards-list").prepend(clonedCard);
-        clonedCard.fadeIn(1500);
+        $("#cards-list").fadeIn(1500);
+    }).catch(function () {
+        onApiError();
     });
 
-    $("#circle-cards").click(function () {
-        circleMode = !circleMode;
+    $("#dark-cards").click(function () {
+        darkMode = !darkMode;
 
-        $("#circle-cards").text(circleMode ? "Стандартни елементи" : "Кръгли елементи");
-        // $(".card-img").toggleClass("rounded-circle")
+        $("#dark-cards").text(darkMode ? "Светли елементи" : "Тъмни елементи");
+        // $(".card-img").toggleClass("rounded-dark")
     })
 
     $(".remove-card").on('click', function(event){
         // TODO - Fix remove card
     });
+
+
+    function onApiError() {
+        alert('Проблем с API call-а. Моля проверете дали има работещо API и дали apiUrl-ът е правилен');
+    }
+
+    function initDisplay()
+    {
+        $("#left").fadeIn(800);
+        $("#right").fadeIn(800);
+        $("#footer-text").fadeIn(2000);
+    }
+
+    function createCard(data)
+    {
+        let clonedCard = $("#clone-this-card").clone();
+
+        clonedCard.removeAttr('id');
+        clonedCard.find('h5').text(`${data.id} - ${data.title}`);
+        clonedCard.find('p').text(`${data.description}`);
+        clonedCard.find('span').text(`${data.created_at}`);
+
+        return clonedCard;
+    }
 })

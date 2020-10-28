@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Final project</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             <div class="col-xs-12 col-md-4" style="display: none;" id="left">
                 <form>
                     <div class="form-group">
-                        <label for="select-field">Заглавие:</label>
+                        <label for="title">Заглавие:</label>
                         <input type="text" class="form-control" id="title" placeholder="Заглавие" />
                     </div>
                     <div class="form-group">
@@ -30,25 +30,43 @@
                 </form>
             </div>
             <div class="col-xs-12 col-md-8" style="display: none;" id="right">
-                <h3>Вашите любими спомени:</h3>
+                <h3>Вашите спомени:</h3>
 
-                <button class="btn btn-warning my-2" id="circle-cards">Кръгли елементи</button>
-
-                <div id="cards-list">
-
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="sort-by">Сортирай по (с ajax заявка)</label>
+                            <select class="form-control custom-select" id="sort-by">
+                                <option value="title">Заглавие</option>
+                                <option value="date">Дата</option>
+                                <option value="id">Идентификатор</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="from-id">Покажи над определено id (без ajax заявка)</label>
+                            <select class="form-control custom-select" id="from-id">
+                                <option value="2">2</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="clone-this-card" class="card my-3" style="max-width: 780px; display:none;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="https://via.placeholder.com/600/24f355" class="card-img" alt="placeholder image">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Title here</h5>
-                                <p class="card-text">Text here.</p>
-                                <button type="button" class="btn btn-danger remove-card">Премахни</button>
-                            </div>
+                <button class="btn btn-warning my-2" id="dark-cards">Тъмни елементи</button>
+
+                <div id="cards-list" style="display: none;">
+                </div>
+
+                <div id="clone-this-card" style="display: none;" class="col-12 my-2">
+                    <div  class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Заглавие</h5>
+                            <p class="card-text">Описание</p>
+                            <span class="d-block small">Създадено на:</span> 
+                            <button type="button" class="btn btn-danger">Изтрий</button>
                         </div>
                     </div>
                 </div>
