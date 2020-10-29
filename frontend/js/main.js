@@ -4,36 +4,45 @@ $(document).ready(function () {
     */
     const apiUrl = 'http://localhost:8000/api/memories';
     let darkMode = false;
+    let currentResult = [];
 
-    $.ajax({
-        method: "GET",
-        url: `${apiUrl}/getAll/1/id`,
-        dataType: "json"
-    }).done(function (data) {
-        initDisplay()
-        
-        for (let i = 0; i < data.length; i++) {
-            const card = createCard(data[i]);
-            $("#cards-list").append(card);
-            card.show();
-        }
-
-        $("#cards-list").fadeIn(1500);
-    }).catch(function () {
-        onApiError();
-    });
+    getAllApiCall(1, 'id', true);
 
     $("#dark-cards").click(function () {
         darkMode = !darkMode;
 
         $("#dark-cards").text(darkMode ? "Светли елементи" : "Тъмни елементи");
-        // $(".card-img").toggleClass("rounded-dark")
+        $(".card").toggleClass('bg-dark text-white');
     })
 
     $(".remove-card").on('click', function(event){
         // TODO - Fix remove card
     });
 
+
+    function getAllApiCall(fromId = 1, sortBy, isFirst) {
+        $.ajax({
+            method: "GET",
+            url: `${apiUrl}/getAll/${fromId}/${sortBy}`,
+            dataType: "json"
+        }).done(function (data) {
+            $("#cards-list").empty();
+
+            if (isFirst) initDisplay();
+
+            currentResult = [...data];
+            
+            for (let i = 0; i < currentResult.length; i++) {
+                const card = createCard(currentResult[i]);
+                $("#cards-list").append(card);
+                card.show();
+            }
+
+            $("#cards-list").fadeIn(1500);
+        }).catch(function () {
+            onApiError();
+        });
+    }
 
     function onApiError() {
         alert('Проблем с API call-а. Моля проверете дали има работещо API и дали apiUrl-ът е правилен');
