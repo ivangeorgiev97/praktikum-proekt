@@ -24,7 +24,7 @@
                         <label for="description">Описание:</label>
                         <textarea class="form-control" id="description" rows="6"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary">Добави</button>
+                    <button id="submit-btn" type="button" class="btn btn-primary">Добави</button>
                 </form>
             </div>
             <div class="col-xs-12 col-md-8" style="display: none;" id="right">
@@ -35,6 +35,7 @@
                         <div class="form-group">
                             <label for="sort-by">Сортирай по (с ajax заявка)</label>
                             <select class="form-control custom-select" id="sort-by">
+                                <option value="" selected disabled hidden>Моля изберете</option>
                                 <option value="title">Заглавие</option>
                                 <option value="date">Дата</option>
                                 <option value="id">Идентификатор</option>
@@ -45,6 +46,7 @@
                         <div class="form-group">
                             <label for="from-id">Покажи над определено id (без ajax заявка)</label>
                             <select class="form-control custom-select" id="from-id">
+                                <option value="" selected disabled hidden>Моля изберете</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="15">15</option>
@@ -64,7 +66,8 @@
                             <h5 class="card-title">Заглавие</h5>
                             <p class="card-text">Описание</p>
                             <span class="d-block small">Създадено на:</span> 
-                            <button type="button" class="btn btn-danger">Изтрий</button>
+                            <a href="edit.html?id=1"><button class="btn btn-warning">Промени</button></a>
+                            <button type="button" class="btn btn-danger remove-card">Изтрий</button>
                         </div>
                     </div>
                 </div>
