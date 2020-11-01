@@ -18,10 +18,6 @@ $(document).ready(function () {
         $(".card").toggleClass('bg-dark text-white');
     })
 
-    $(".remove-card").click(function () {
-        // TODO - Fix remove card
-    });
-
     $("#sort-by").change(function () {
         sortByVal = $(this).val();
         fromIdVal = $("#from-id").val();
@@ -49,8 +45,27 @@ $(document).ready(function () {
     })
 
     $("#submit-btn").click(function () {
-        // TODO -Add submit loigc
+       const title = $("#title").val();
+       const description = $("#description").val();
+
+       if (title && description) addCard(title, description);
     })
+
+    $(".remove-card").click(function () {
+        const id = $(this).data('id');
+
+        if (id) deleteCard(id.split('-')[1]);
+    });
+
+    $(".edit-card").click(function () {
+        const id = $(this).data('id');
+
+        if (id) editCard(id);
+    });
+
+    $(".edit-card").click(function () {
+        
+    });
 
     function getAll(fromId = 1, sortBy, isFirst) {
         $.ajax({
@@ -59,10 +74,43 @@ $(document).ready(function () {
             dataType: "json"
         }).done(function (data) {
             currentResult = [...data];
+
             renderData(data, isFirst);
         }).catch(function () {
             onApiError();
         });
+    }
+
+
+    function addCard(title, description) {
+        $.post(`${apiUrl}/create`, {
+            title: title,
+            description: description
+        }, function(data) {
+            currentResult.push(data);
+
+            const card = createCard(data);
+            $("#cards-list").prepend(card);
+
+            $("#title").empty();
+            $("#description").empty();
+
+            card.fadeIn(1000);
+        });
+    }
+
+    function deleteCard(id) {
+        $.ajax({
+            url: `${apiUrl}/delete/${id}`,
+            type: 'DELETE',
+            success: () => {
+                $(`#card-${id}`).fadeOut(1000);
+            }
+        })
+    }
+
+    function editCard(id) {
+        // TODO - Edit API call
     }
 
     function renderData(data, isFirst) {
@@ -93,6 +141,9 @@ $(document).ready(function () {
         let clonedCard = $("#clone-this-card").clone();
 
         clonedCard.removeAttr('id');
+        clonedCard.attr('id', `card-${data.id}`)
+        clonedCard.find('.remove-card').data('id', `remove-${data.id}`);
+        clonedCard.find('.edit-card').data('id', `edit-${data.id}`);
         clonedCard.find('h5').text(`${data.id} - ${data.title}`);
         clonedCard.find('p').text(`${data.description}`);
         clonedCard.find('span').text(`${data.created_at}`);
