@@ -31,13 +31,13 @@ $(document).ready(function () {
         fromIdVal = $(this).val();
         sortByVal = $("#sort-by").val();
 
-        if (fromIdVal && (currentResult.length === 0 || (tempId && tempId > fromIdVal))) { 
+        if (fromIdVal && (currentResult.length === 0 || (tempId && tempId > fromIdVal))) {
             getAll(fromIdVal, 'id', false);
         }
 
         if (fromIdVal) {
             const filteredResult = currentResult.filter(el => el.id >= fromIdVal)
-            
+
             tempId = fromIdVal;
 
             renderData(filteredResult, false);
@@ -45,26 +45,33 @@ $(document).ready(function () {
     })
 
     $("#submit-btn").click(function () {
-       const title = $("#title").val();
-       const description = $("#description").val();
+        const title = $("#title").val();
+        const description = $("#description").val();
 
-       if (title && description) addCard(title, description);
+        if (title && description) addCard(title, description);
     })
 
-    $(".remove-card").click(function () {
-        const id = $(this).data('id');
+    $("#edit-btn").click(function () {
+        // TODO - Add edit logic
+    })
 
-        if (id) deleteCard(id.split('-')[1]);
+    $(document).on('click', '.remove-card', function () {
+        const id = $(this).data('id').split('-')[1];
+
+        if (id) deleteCard(id);
     });
 
-    $(".edit-card").click(function () {
-        const id = $(this).data('id');
+    $(document).on('click', '.edit-card', function () {
+        const id = $(this).data('id').split('-')[1];
+
+        $("#submit-btn").attr("id", "edit-btn");
+
+        // TODO - Fix this logic
+        $("#title").val($(`card-${id}`).find('.title-name').val());
+        $("#description").val($(`card-${id}`).find('p').val());
+        $("#edit-btn").text("Промени");
 
         if (id) editCard(id);
-    });
-
-    $(".edit-card").click(function () {
-        
     });
 
     function getAll(fromId = 1, sortBy, isFirst) {
@@ -81,12 +88,11 @@ $(document).ready(function () {
         });
     }
 
-
     function addCard(title, description) {
         $.post(`${apiUrl}/create`, {
             title: title,
             description: description
-        }, function(data) {
+        }, function (data) {
             currentResult.push(data);
 
             const card = createCard(data);
@@ -110,7 +116,15 @@ $(document).ready(function () {
     }
 
     function editCard(id) {
-        // TODO - Edit API call
+/*         $.ajax({
+            type: 'PUT',
+            url: 'http://example.com/api',
+            contentType: 'application/json',
+            data: JSON.stringify(data), // access in body
+        }).done(function () {
+            console.log('SUCCESS');
+        });  */
+        // TODO - Add API Call for edit
     }
 
     function renderData(data, isFirst) {
@@ -144,9 +158,9 @@ $(document).ready(function () {
         clonedCard.attr('id', `card-${data.id}`)
         clonedCard.find('.remove-card').data('id', `remove-${data.id}`);
         clonedCard.find('.edit-card').data('id', `edit-${data.id}`);
-        clonedCard.find('h5').text(`${data.id} - ${data.title}`);
+        clonedCard.find('h5').html(`<span class="title-id">${data.id}</span> - <span class="title-name">${data.title}</span>`);
         clonedCard.find('p').text(`${data.description}`);
-        clonedCard.find('span').text(`${data.created_at}`);
+        clonedCard.find('.card-created-at').text(`${data.created_at}`);
 
         return clonedCard;
     }

@@ -18,11 +18,11 @@
                 <form>
                     <div class="form-group">
                         <label for="title">Заглавие:</label>
-                        <input type="text" class="form-control" id="title" placeholder="Заглавие" />
+                        <input type="text" class="form-control" id="title" placeholder="Заглавие" minlength="2" />
                     </div>
                     <div class="form-group">
                         <label for="description">Описание:</label>
-                        <textarea class="form-control" id="description" rows="6"></textarea>
+                        <textarea class="form-control" id="description" rows="6" minlength="4"></textarea>
                     </div>
                     <button id="submit-btn" type="button" class="btn btn-primary">Добави</button>
                 </form>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="from-id">Покажи над определено id (без ajax заявка)</label>
+                            <label for="from-id">ID филтриране (без ajax заявка)</label>
                             <select class="form-control custom-select" id="from-id">
                                 <option value="" selected disabled hidden>Моля изберете</option>
                                 <option value="1">1</option>
@@ -65,8 +65,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Заглавие</h5>
                             <p class="card-text">Описание</p>
-                            <span class="d-block small">Създадено на:</span> 
-                            <a href="edit.html?id=1"><button class="btn btn-warning edit-card">Промени</button></a>
+                            <span class="d-block small card-created-at">Създадено на:</span> 
+                            <button type="button" class="btn btn-warning edit-card">Промени</button>
                             <button type="button" class="btn btn-danger remove-card">Изтрий</button>
                         </div>
                     </div>
