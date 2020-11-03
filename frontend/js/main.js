@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     let darkMode = false;
     let currentResult = [];
+    let currentCard;
     let tempId;
     let sortByVal;
     let fromIdVal;
@@ -66,12 +67,11 @@ $(document).ready(function () {
 
         $("#submit-btn").attr("id", "edit-btn");
 
-        // TODO - Fix this logic
-        $("#title").val($(`card-${id}`).find('.title-name').val());
-        $("#description").val($(`card-${id}`).find('p').val());
-        $("#edit-btn").text("Промени");
+        currentCard = currentResult.find(el => el.id == id);
 
-        if (id) editCard(id);
+        $("#title").val(currentCard.title);
+        $("#description").val(currentCard.description);
+        $("#edit-btn").text("Промени");
     });
 
     function getAll(fromId = 1, sortBy, isFirst) {
