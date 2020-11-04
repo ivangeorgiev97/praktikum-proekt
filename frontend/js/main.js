@@ -45,6 +45,7 @@ $(document).ready(function () {
         }
     })
 
+    // or form submit with serialize function called
     $("#submit-btn").click(function () {
         const title = $("#title").val();
         const description = $("#description").val();
@@ -52,9 +53,14 @@ $(document).ready(function () {
         if (title && description) addCard(title, description);
     })
 
-    $("#edit-btn").click(function () {
-        // TODO - Add edit logic
-    })
+    $(document).on('click', '#edit-btn', function () {
+        const currentId = currentCard && currentCard.id ? currentCard.id : 0;
+        const title = $("#edit-title").val();
+        const description = $("#edit-description").val();
+        
+
+        if (title && description && currentId) editCard(currentId, title, description);
+    });
 
     $(document).on('click', '.remove-card', function () {
         const id = $(this).data('id').split('-')[1];
@@ -63,15 +69,18 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.edit-card', function () {
-        const id = $(this).data('id').split('-')[1];
+        $("#add-form").hide();
+        $("#loading-spinner").show();
 
-        $("#submit-btn").attr("id", "edit-btn");
+        const id = $(this).data('id').split('-')[1];
 
         currentCard = currentResult.find(el => el.id == id);
 
-        $("#title").val(currentCard.title);
-        $("#description").val(currentCard.description);
-        $("#edit-btn").text("Промени");
+        $("#edit-title").val(currentCard.title);
+        $("#edit-description").val(currentCard.description);
+
+        $("#loading-spinner").hide();
+        $("#edit-form").show();
     });
 
     function getAll(fromId = 1, sortBy, isFirst) {
@@ -102,7 +111,9 @@ $(document).ready(function () {
             $("#description").empty();
 
             card.fadeIn(1000);
-        });
+        }).catch(function () {
+            onApiError();
+        });;
     }
 
     function deleteCard(id) {
@@ -112,19 +123,34 @@ $(document).ready(function () {
             success: () => {
                 $(`#card-${id}`).fadeOut(1000);
             }
-        })
+        }).catch(function () {
+            onApiError();
+        });
     }
 
-    function editCard(id) {
-/*         $.ajax({
+    function editCard(id, title, description) {
+        $.ajax({
             type: 'PUT',
-            url: 'http://example.com/api',
+            url: `${apiUrl}/update/${id}`,
             contentType: 'application/json',
-            data: JSON.stringify(data), // access in body
+            data: {
+                id: id,
+                title: title,
+                description: description
+            }
         }).done(function () {
-            console.log('SUCCESS');
-        });  */
-        // TODO - Add API Call for edit
+            $("#edit-form").hide();
+            $("#add-form").show();
+            if (currentCard) {
+                const editedCard = $(`#card-${currentCard.id}`);
+                editedCard.find('h5').html(`<span class="title-id">${currentCard.id}</span> - <span class="title-name">${title}</span>`);
+                editedCard.find('p').text(`${description}`);
+            }
+        }).catch(function () {
+            onApiError();
+            $("#edit-form").hide();
+            $("#add-form").show();
+        });
     }
 
     function renderData(data, isFirst) {
