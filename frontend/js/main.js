@@ -129,15 +129,17 @@ $(document).ready(function () {
     }
 
     function editCard(id, title, description) {
+        const data = {
+            id: id,
+            title: title,
+            description: description
+        }
+
         $.ajax({
             type: 'PUT',
             url: `${apiUrl}/update/${id}`,
             contentType: 'application/json',
-            data: {
-                id: id,
-                title: title,
-                description: description
-            }
+            data: JSON.stringify(data)
         }).done(function () {
             $("#edit-form").hide();
             $("#add-form").show();
