@@ -57,7 +57,7 @@ $(document).ready(function () {
         const currentId = currentCard && currentCard.id ? currentCard.id : 0;
         const title = $("#edit-title").val();
         const description = $("#edit-description").val();
-        
+
 
         if (title && description && currentId) editCard(currentId, title, description);
     });
@@ -84,48 +84,54 @@ $(document).ready(function () {
     });
 
     function getAll(fromId = 1, sortBy, isFirst) {
-        $.ajax({
-            method: "GET",
-            url: `${apiUrl}/getAll/${fromId}/${sortBy}`,
-            dataType: "json"
-        }).done(function (data) {
-            currentResult = [...data];
+        setTimeout(function () {
+            $.ajax({
+                method: "GET",
+                url: `${apiUrl}/getAll/${fromId}/${sortBy}`,
+                dataType: "json"
+            }).done(function (data) {
+                currentResult = [...data];
 
-            renderData(data, isFirst);
-        }).catch(function () {
-            onApiError();
-        });
+                renderData(data, isFirst);
+            }).catch(function () {
+                onApiError();
+            });
+        }, 300)
     }
 
     function addCard(title, description) {
-        $.post(`${apiUrl}/create`, {
-            title: title,
-            description: description
-        }, function (data) {
-            currentResult.push(data);
+        setTimeout(function () {
+            $.post(`${apiUrl}/create`, {
+                title: title,
+                description: description
+            }, function (data) {
+                currentResult.push(data);
 
-            const card = createCard(data);
-            $("#cards-list").prepend(card);
+                const card = createCard(data);
+                $("#cards-list").prepend(card);
 
-            $("#title").empty();
-            $("#description").empty();
+                $("#title").empty();
+                $("#description").empty();
 
-            card.fadeIn(1000);
-        }).catch(function () {
-            onApiError();
-        });;
+                card.fadeIn(1000);
+            }).catch(function () {
+                onApiError();
+            })
+        }, 500)
     }
 
     function deleteCard(id) {
-        $.ajax({
-            url: `${apiUrl}/delete/${id}`,
-            type: 'DELETE',
-            success: () => {
-                $(`#card-${id}`).fadeOut(1000);
-            }
-        }).catch(function () {
-            onApiError();
-        });
+        setTimeout(function () {
+            $.ajax({
+                url: `${apiUrl}/delete/${id}`,
+                type: 'DELETE',
+                success: () => {
+                    $(`#card-${id}`).fadeOut(1000);
+                }
+            }).catch(function () {
+                onApiError();
+            });
+        }, 300)
     }
 
     function editCard(id, title, description) {
@@ -135,24 +141,26 @@ $(document).ready(function () {
             description: description
         }
 
-        $.ajax({
-            type: 'PUT',
-            url: `${apiUrl}/update/${id}`,
-            contentType: 'application/json',
-            data: JSON.stringify(data)
-        }).done(function () {
-            $("#edit-form").hide();
-            $("#add-form").show();
-            if (currentCard) {
-                const editedCard = $(`#card-${currentCard.id}`);
-                editedCard.find('h5').html(`<span class="title-id">${currentCard.id}</span> - <span class="title-name">${title}</span>`);
-                editedCard.find('p').text(`${description}`);
-            }
-        }).catch(function () {
-            onApiError();
-            $("#edit-form").hide();
-            $("#add-form").show();
-        });
+        setTimeout(function () {
+            $.ajax({
+                type: 'PUT',
+                url: `${apiUrl}/update/${id}`,
+                contentType: 'application/json',
+                data: JSON.stringify(data)
+            }).done(function () {
+                $("#edit-form").hide();
+                $("#add-form").show();
+                if (currentCard) {
+                    const editedCard = $(`#card-${currentCard.id}`);
+                    editedCard.find('h5').html(`<span class="title-id">${currentCard.id}</span> - <span class="title-name">${title}</span>`);
+                    editedCard.find('p').text(`${description}`);
+                }
+            }).catch(function () {
+                onApiError();
+                $("#edit-form").hide();
+                $("#add-form").show();
+            });
+        }, 500)
     }
 
     function renderData(data, isFirst) {
